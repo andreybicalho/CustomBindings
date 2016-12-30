@@ -11,6 +11,60 @@ UKeyBindingsUtil::UKeyBindingsUtil(const FObjectInitializer& ObjectInitializer) 
 {
 }
 
+
+FInputAction UKeyBindingsUtil::GetInputActionFromMouseButtonEvent(const FPointerEvent& MouseEvent)
+{
+	FInputAction InputAction;
+
+	InputAction.Key = MouseEvent.GetEffectingButton();
+	InputAction.KeyAsString = InputAction.Key.GetDisplayName().ToString();
+
+	InputAction.bAlt = MouseEvent.IsAltDown();
+	InputAction.bCtrl = MouseEvent.IsControlDown();
+	InputAction.bShift = MouseEvent.IsShiftDown();
+	InputAction.bCmd = MouseEvent.IsCommandDown();
+
+	return InputAction;
+}
+
+FInputAxis UKeyBindingsUtil::GetInputAxisFromMouseButtonEvent(const FPointerEvent& MouseEvent)
+{	
+	FInputAxis InputAxis;
+
+	InputAxis.Key = MouseEvent.GetEffectingButton();
+	InputAxis.KeyAsString = InputAxis.Key.GetDisplayName().ToString();
+
+	InputAxis.Scale = 1;
+	
+	return InputAxis;
+}
+
+FInputAxis UKeyBindingsUtil::GetInputAxisFromMouseAxisEvent(const FPointerEvent& MouseEvent)
+{
+	FInputAxis InputAxis;
+
+	float CurrentHorizontalDistance = FMath::Abs(MouseEvent.GetCursorDelta().X);
+	float CurrentVerticalDistance = FMath::Abs(MouseEvent.GetCursorDelta().Y);
+
+	if (CurrentHorizontalDistance > CurrentVerticalDistance)
+	{
+		InputAxis.Key = FKey(FName("MouseX"));
+
+		InputAxis.Scale = MouseEvent.GetCursorDelta().X >= 0.f ? 1 : -1;
+	} 
+	else
+	{
+		InputAxis.Key = FKey(FName("MouseY"));
+
+		InputAxis.Scale = MouseEvent.GetCursorDelta().Y >= 0.f ? 1 : -1;
+	}
+
+
+	InputAxis.KeyAsString = InputAxis.Key.GetDisplayName().ToString();
+
+	return InputAxis;
+}
+
 FInputAction UKeyBindingsUtil::GetInputActionFromKeyEvent(const FKeyEvent& KeyEvent)
 {
 	FInputAction InputAction;

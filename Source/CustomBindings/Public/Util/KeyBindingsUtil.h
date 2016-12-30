@@ -104,6 +104,15 @@ public:
 	UKeyBindingsUtil(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintPure, Category = "Key Bindings")
+	static FInputAxis GetInputAxisFromMouseButtonEvent(const FPointerEvent& MouseEvent);
+
+	UFUNCTION(BlueprintPure, Category = "Key Bindings")
+	static FInputAxis GetInputAxisFromMouseAxisEvent(const FPointerEvent& MouseEvent);
+
+	UFUNCTION(BlueprintPure, Category = "Key Bindings")
+	static FInputAction GetInputActionFromMouseButtonEvent(const FPointerEvent& MouseEvent);
+
+	UFUNCTION(BlueprintPure, Category = "Key Bindings")
 	static FInputAxis GetInputAxisFromKeyEvent(const FKeyEvent& KeyEvent);
 
 	UFUNCTION(BlueprintPure, Category = "Key Bindings")
